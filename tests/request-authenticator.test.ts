@@ -24,7 +24,7 @@ describe('Test Request Authenticator', () => {
         const auth: UserAuthentication = { isAuthorized: true, user: 'testName', token: 'testToken' };
         const provider: AuthTokenProvider = new AuthTokenProvider();
         const authorizer: RequestTokenAuthenticator = new RequestTokenAuthenticator(auth, provider);
-        const expected = 'bearer testToken';
+        const expected = 'Bearer testToken';
         // act
         const req = Request.get('');
         const result = authorizer.authorizeRequest(req);

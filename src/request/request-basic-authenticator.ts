@@ -31,6 +31,8 @@ export class RequestBasicAuthenticator implements RequestAuthenticator<Request.S
     if (!this._authentication.isAuthorized) {
       return request;
     }
-    return request.auth(this._authentication.user, this._authentication.credential, { type: 'basic' });
+    return request.auth(this._authentication.userCredentials.userId, this._authentication.userCredentials.credential, {
+      type: 'basic',
+    });
   }
 }

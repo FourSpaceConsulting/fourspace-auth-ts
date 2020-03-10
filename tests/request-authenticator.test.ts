@@ -8,7 +8,7 @@ describe('Test Request Authenticator', () => {
 
     test('Test basic request header', () => {
         // arrange
-        const auth: UserAuthentication = { isAuthorized: true, user: 'testName', credential: 'testPassword' };
+        const auth: UserAuthentication = { isAuthorized: true, userCredentials: { userId: 'testName', credentialType: 'native', credential: 'testPassword' } };
         const authorizer: RequestBasicAuthenticator = new RequestBasicAuthenticator(auth);
         const expected = 'Basic dGVzdE5hbWU6dGVzdFBhc3N3b3Jk';
         // act
@@ -21,7 +21,7 @@ describe('Test Request Authenticator', () => {
 
     test('Test token request header', () => {
         // arrange
-        const auth: UserAuthentication = { isAuthorized: true, user: 'testName', token: 'testToken' };
+        const auth: UserAuthentication = { isAuthorized: true, token: 'testToken' };
         const provider: AuthTokenProvider = new AuthTokenProvider();
         const authorizer: RequestTokenAuthenticator = new RequestTokenAuthenticator(auth, provider);
         const expected = 'Bearer testToken';

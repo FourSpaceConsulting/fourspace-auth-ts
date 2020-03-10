@@ -1,7 +1,7 @@
 import * as Request from 'superagent';
 import { LogFactory } from 'fourspace-logger-ts';
 import { UserAuthenticator } from '../definitions/user-authenticator';
-import { UserAuthentication, AuthenticatedUser } from '../definitions/user-authentication';
+import { UserAuthentication, UserCredentials, AuthenticatedUser } from '../definitions/user-authentication';
 import { AuthenticationUri } from '../definitions/authentication-uri';
 
 const LOGGER = LogFactory.getLogger('api-user-authenticator');
@@ -13,10 +13,14 @@ export class ApiUserAuthenticator implements UserAuthenticator {
     this.authUri = authUri;
   }
 
-  public authenticate(user: string, credentialType: string, credential: string): Promise<UserAuthentication> {
+  public authenticate(userCredentials: UserCredentials): Promise<UserAuthentication> {
     return new Promise<UserAuthentication>(resolve => {
       Request.post(this.authUri.authenticateUri)
-        .send({ username: user, credentialType, credential })
+        .send({
+          username: userCredentials.userId,
+          credentialType: userCredentials.credentialType,
+          credentials: userCredentials.credential,
+        })
         .then(
           (authData: Request.Response) => {
             if (LOGGER.isDebugEnabled()) {
@@ -25,9 +29,7 @@ export class ApiUserAuthenticator implements UserAuthenticator {
             const au: AuthenticatedUser = authData.body;
             resolve({
               isAuthorized: true,
-              user,
-              credentialType,
-              credential,
+              userCredentials,
               authenticatedUser: au,
               token: au.userToken,
               timestamp: au.userTokenDate,
@@ -37,7 +39,7 @@ export class ApiUserAuthenticator implements UserAuthenticator {
             if (LOGGER.isDebugEnabled()) {
               LOGGER.debug('Error authorizing user', JSON.stringify(error));
             }
-            resolve({ isAuthorized: false, loginFailed: true, user, credentialType, credential });
+            resolve({ isAuthorized: false, loginFailed: true, userCredentials, loginMessage: error.response.text });
           },
         );
     });

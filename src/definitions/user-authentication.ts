@@ -9,13 +9,18 @@
   secretKey: string;
 }
 
+export interface UserCredentials {
+  userId: string;
+  credentialType: string;
+  credential: string;
+}
+
 export interface UserAuthentication {
   isAuthorized: boolean;
   authenticatedUser?: AuthenticatedUser;
   loginFailed?: boolean;
-  user?: string;
-  credentialType?: string;
-  credential?: string;
+  loginMessage?: string;
+  userCredentials?: UserCredentials;
   token?: string;
   timestamp?: any;
 }

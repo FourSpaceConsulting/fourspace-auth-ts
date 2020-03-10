@@ -1,8 +1,8 @@
 ﻿import { Dispatcher } from 'fourspace-flux-ts';
 import { AuthenticationPayload } from '../definitions/user-authentication';
 import { UserAuthenticator } from '../definitions/user-authenticator';
-import { AuthenticationActionCreator } from './authentication-action-creator';
-import { AuthorizationStore } from './authorization-store';
+import { AuthenticationActionCreator, AuthenticationActionCreatorImpl } from './authentication-action-creator';
+import { AuthorizationStore, AuthorizationStoreImpl } from './authorization-store';
 
 export class AuthenticationManager {
   private _userAuthenticator: UserAuthenticator;
@@ -13,8 +13,8 @@ export class AuthenticationManager {
   constructor(dispatcher: Dispatcher<AuthenticationPayload>, userAuthenticator: UserAuthenticator) {
     this._dispatcher = dispatcher;
     this._userAuthenticator = userAuthenticator;
-    this._store = new AuthorizationStore(dispatcher);
-    this._actionCreator = new AuthenticationActionCreator(dispatcher, userAuthenticator);
+    this._store = new AuthorizationStoreImpl(dispatcher);
+    this._actionCreator = new AuthenticationActionCreatorImpl(dispatcher, userAuthenticator);
   }
 
   public get userAuthenticator(): UserAuthenticator {

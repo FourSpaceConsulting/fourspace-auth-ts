@@ -1,11 +1,11 @@
-﻿import { Dispatcher, EmitAllEventEmitter, DispatcherUpdateStore } from 'fourspace-flux-ts';
+﻿import { Dispatcher, EmitAllEventEmitter, DispatcherUpdateStore, Store } from 'fourspace-flux-ts';
 import { UserAuthentication, AuthenticationPayload } from '../definitions/user-authentication';
 
-export class AuthorizationStore extends DispatcherUpdateStore<
-  AuthenticationPayload,
-  UserAuthentication,
-  UserAuthentication
-> {
+export interface AuthorizationStore extends Store<UserAuthentication, UserAuthentication> {}
+
+export class AuthorizationStoreImpl
+  extends DispatcherUpdateStore<AuthenticationPayload, UserAuthentication, UserAuthentication>
+  implements AuthorizationStore {
   private _userAuthentication: UserAuthentication;
 
   constructor(dispatcher: Dispatcher<AuthenticationPayload>) {

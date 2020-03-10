@@ -1,8 +1,14 @@
 ﻿import { Dispatcher } from 'fourspace-flux-ts';
-import { UserAuthentication, AuthenticationPayload } from '../definitions/user-authentication';
+import { UserAuthentication, UserCredentials, AuthenticationPayload } from '../definitions/user-authentication';
 import { UserAuthenticator } from '../definitions/user-authenticator';
 
-export class AuthenticationActionCreator {
+export interface AuthenticationActionCreator {
+  performLogin(userCredentials: UserCredentials): Promise<UserAuthentication>;
+  performLogout(): void;
+  invalidateAuthorization(): void;
+}
+
+export class AuthenticationActionCreatorImpl implements AuthenticationActionCreator {
   private _authDispatcher: Dispatcher<AuthenticationPayload>;
   private _userAuthenticator: UserAuthenticator;
 
@@ -11,14 +17,14 @@ export class AuthenticationActionCreator {
     this._userAuthenticator = userAuthenticator;
   }
 
-  public async performLogin(user: string, credentialType: string, credential: string): Promise<UserAuthentication> {
-    const auth = await this._userAuthenticator.authenticate(user, credentialType, credential);
+  public async performLogin(userCredentials: UserCredentials): Promise<UserAuthentication> {
+    const auth = await this._userAuthenticator.authenticate(userCredentials);
     this._onAuthentication(auth);
     return auth;
   }
 
   public performLogout(): void {
-    this._authDispatcher.dispatch({ userAuthentication: { isAuthorized: false, user: null, credential: null } });
+    this._authDispatcher.dispatch({ userAuthentication: { isAuthorized: false, userCredentials: null } });
   }
 
   public invalidateAuthorization(): void {

@@ -2,14 +2,14 @@ import * as Request from 'superagent';
 import { LogFactory } from 'fourspace-logger-ts';
 import { UserAuthenticator } from '../definitions/user-authenticator';
 import { UserAuthentication, UserCredentials, AuthenticatedUser } from '../definitions/user-authentication';
-import { AuthenticationUri } from '../definitions/authentication-uri';
+import { AuthenticationUriProvider } from '../definitions/authentication-uri-provider';
 
 const LOGGER = LogFactory.getLogger('api-user-authenticator');
 
 export class ApiUserAuthenticator implements UserAuthenticator {
-  private readonly authUri: AuthenticationUri;
+  private readonly authUri: AuthenticationUriProvider;
 
-  constructor(authUri: AuthenticationUri) {
+  constructor(authUri: AuthenticationUriProvider) {
     this.authUri = authUri;
   }
 

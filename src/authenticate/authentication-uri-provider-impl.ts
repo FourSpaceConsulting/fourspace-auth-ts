@@ -1,6 +1,6 @@
-import { AuthenticationUri } from '../definitions/authentication-uri';
+import { AuthenticationUriProvider } from '../definitions/authentication-uri-provider';
 
-export class AuthenticationUriProvider implements AuthenticationUri {
+export class AuthenticationUriProviderImpl implements AuthenticationUriProvider {
   private readonly hostUri: string;
   private readonly uriPath: string;
   constructor(hostUri: string, uriPath: string) {

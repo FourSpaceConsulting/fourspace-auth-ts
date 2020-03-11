@@ -1,13 +1,7 @@
 ﻿import { Dispatcher } from 'fourspace-flux-ts';
 import { UserAuthentication, UserCredentials, AuthenticationPayload } from '../definitions/user-authentication';
 import { UserAuthenticator } from '../definitions/user-authenticator';
-
-export interface AuthenticationActionCreator {
-  performLogin(userCredentials: UserCredentials): Promise<UserAuthentication>;
-  persistentLogin(): void;
-  performLogout(): void;
-  invalidateAuthorization(): void;
-}
+import { AuthenticationActionCreator } from '../definitions/authentication-action-creator';
 
 export class AuthenticationActionCreatorImpl implements AuthenticationActionCreator {
   private _authDispatcher: Dispatcher<AuthenticationPayload>;

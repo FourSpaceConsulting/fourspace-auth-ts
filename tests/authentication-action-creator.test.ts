@@ -1,12 +1,8 @@
-﻿import { AuthorizationStoreImpl } from './../src/flux/authorization-store';
-import { AuthenticationActionCreatorImpl } from './../src/flux/authentication-action-creator';
-import { UserAuthenticator } from './../src/definitions/user-authenticator';
+﻿import { UserAuthenticator } from './../src/definitions/user-authenticator';
 import { PayloadDispatcher } from 'fourspace-flux-ts';
 import { UserAuthentication, AuthenticationPayload, UserCredentials } from '../src/definitions/user-authentication';
-import { AuthTokenProvider } from '../src/token/auth-token-provider';
-import { RequestTokenAuthenticator } from '../src/request/request-token-authenticator';
-import { RequestBasicAuthenticator } from '../src/request/request-basic-authenticator';
-import * as Request from 'superagent';
+import { AuthenticationStoreImpl } from '../src/flux/authentication-store-impl';
+import { AuthenticationActionCreatorImpl } from '../src/flux/authentication-action-creator-impl';
 
 describe('Test Authentication Action Creator', () => {
 
@@ -20,7 +16,7 @@ describe('Test Authentication Action Creator', () => {
             }
         }();
         const actionCreator = new AuthenticationActionCreatorImpl(authDispatcher, authenticator);
-        const store = new AuthorizationStoreImpl(authDispatcher);
+        const store = new AuthenticationStoreImpl(authDispatcher);
         const updates: UserAuthentication[] = [];
         const storeData: UserAuthentication[] = [];
         const receivedEvents = new Promise((resolve) => {

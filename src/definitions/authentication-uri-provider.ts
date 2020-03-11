@@ -1,6 +1,6 @@
 /**
  * Provides the uri for API authentication
  */
-export interface AuthenticationUri {
+export interface AuthenticationUriProvider {
   authenticateUri: string;
 }

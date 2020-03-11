@@ -12,12 +12,14 @@
 export interface UserCredentials {
   userId: string;
   credentialType: string;
-  credential: string;
+  credential: any;
 }
 
 export interface UserAuthentication {
   isAuthorized: boolean;
   authenticatedUser?: AuthenticatedUser;
+  isPendingLogin?: boolean;
+  isPendingLogout?: boolean;
   loginFailed?: boolean;
   loginMessage?: string;
   userCredentials?: UserCredentials;
@@ -27,5 +29,6 @@ export interface UserAuthentication {
 
 export interface AuthenticationPayload {
   invalidate?: boolean;
+  pendingLogin?: boolean;
   userAuthentication?: UserAuthentication;
 }

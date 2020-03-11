@@ -4,6 +4,7 @@ import { UserAuthenticator } from '../definitions/user-authenticator';
 
 export interface AuthenticationActionCreator {
   performLogin(userCredentials: UserCredentials): Promise<UserAuthentication>;
+  persistentLogin(): void;
   performLogout(): void;
   invalidateAuthorization(): void;
 }
@@ -18,9 +19,18 @@ export class AuthenticationActionCreatorImpl implements AuthenticationActionCrea
   }
 
   public async performLogin(userCredentials: UserCredentials): Promise<UserAuthentication> {
+    this._authDispatcher.dispatch({ pendingLogin: true });
     const auth = await this._userAuthenticator.authenticate(userCredentials);
     this._onAuthentication(auth);
     return auth;
+  }
+
+  /**
+   * this should be overridden for relevant storage technology (e.g. mobile token, web cookies)
+   * default behaviour is to do nothing (i.e. there is no stored auth info)
+   */
+  public persistentLogin(): void {
+    return;
   }
 
   public performLogout(): void {

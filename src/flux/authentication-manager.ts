@@ -2,7 +2,7 @@
 import { AuthenticationPayload } from '../definitions/user-authentication';
 import { UserAuthenticator } from '../definitions/user-authenticator';
 import { AuthenticationActionCreator } from '../definitions/authentication-action-creator';
-import { AuthenticationActionCreatorImpl } from './authentication-action-creator-impl';
+import { AuthenticationActionCreatorImpl } from './authentication-action-creatorimpl';
 import { AuthenticationStoreImpl } from './authentication-store-impl';
 import { AuthenticationStore } from '../definitions/authentication-store';
 

@@ -1,5 +1,5 @@
 import { UserAuthenticator } from '../definitions/user-authenticator';
-import { AuthenticationPayload, UserCredentials, UserAuthentication } from '../definitions/user-authentication';
+import { UserCredentials, UserAuthentication } from '../definitions/user-authentication';
 
 export class InMemoryUserAuthenticator implements UserAuthenticator {
   private _userMap: { [key: string]: string };

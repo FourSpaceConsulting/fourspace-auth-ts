@@ -1,3 +1,4 @@
+export * from './authenticate/in-memory-user-authenticator';
 export * from './authenticate/api-user-authenticator';
 export * from './authenticate/authentication-uri-provider';
 export * from './definitions/authentication-uri';

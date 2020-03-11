@@ -1,9 +1,9 @@
 // auth object
 export {
-  AuthenticatedUser,
-  UserCredentials,
-  UserAuthentication,
-  AuthenticationPayload,
+    AuthenticatedUser,
+    UserCredentials,
+    UserAuthentication,
+    AuthenticationPayload,
 } from './definitions/user-authentication';
 // requests
 export { RequestAuthenticator } from './definitions/request-authenticator';
@@ -13,7 +13,7 @@ export { TokenProvider } from './definitions/token-provider';
 export { AuthTokenProvider } from './token/auth-token-provider';
 // authenticators
 export { UserAuthenticator } from './definitions/user-authenticator';
-export { InMemoryUserAuthenticator } from './authenticate/in-memory-user-authenticator';
+export { InMemoryUserAuthenticator } from './authenticate/memory-user-authenticator';
 export { ApiUserAuthenticator } from './authenticate/api-user-authenticator';
 export { AuthenticationUriProvider } from './definitions/authentication-uri-provider';
 export { AuthenticationUriProviderImpl } from './authenticate/authentication-uri-provider-impl';

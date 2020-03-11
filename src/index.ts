@@ -13,13 +13,13 @@ export { TokenProvider } from './definitions/token-provider';
 export { AuthTokenProvider } from './token/auth-token-provider';
 // authenticators
 export { UserAuthenticator } from './definitions/user-authenticator';
-export { InMemoryUserAuthenticator } from './authenticate/memory-user-authenticator';
+export { InMemoryUserAuthenticator } from './authenticate/memoryuserauthenticator';
 export { ApiUserAuthenticator } from './authenticate/api-user-authenticator';
 export { AuthenticationUriProvider } from './definitions/authentication-uri-provider';
-export { AuthenticationUriProviderImpl } from './authenticate/authentication-uri-providerimpl';
+export { AuthenticationUriProviderImpl } from './authenticate/authuriproviderimpl';
 // flux
 export { AuthenticationActionCreator } from './definitions/authentication-action-creator';
-export { AuthenticationActionCreatorImpl } from './flux/authentication-action-creatorimpl';
+export { AuthenticationActionCreatorImpl } from './flux/authactioncreatorimpl';
 export { AuthenticationStore } from './definitions/authentication-store';
-export { AuthenticationStoreImpl } from './flux/authentication-store-impl';
-export { AuthenticationManager } from './flux/authentication-manager';
+export { AuthenticationStoreImpl } from './flux/auth-storeimpl';
+export { AuthenticationManager } from './flux/auth-manager';

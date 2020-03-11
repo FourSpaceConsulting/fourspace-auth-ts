@@ -1,9 +1,9 @@
 // auth object
 export {
-    AuthenticatedUser,
-    UserCredentials,
-    UserAuthentication,
-    AuthenticationPayload,
+  AuthenticatedUser,
+  UserCredentials,
+  UserAuthentication,
+  AuthenticationPayload,
 } from './definitions/user-authentication';
 // requests
 export { RequestAuthenticator } from './definitions/request-authenticator';

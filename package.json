@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@types/superagent": "^4.1.7",
-    "fourspace-flux-ts": "^1.0.0",
+    "fourspace-flux-ts": "^1.0.1",
     "fourspace-logger-ts": "^1.0.2",
     "superagent": "^5.2.2"
   }

@@ -18,19 +18,19 @@ export class AuthenticationActionCreatorImpl implements AuthenticationActionCrea
     this._userAuthenticator = userAuthenticator;
   }
 
-  public async performLogin(userCredentials: UserCredentials): Promise<UserAuthentication> {
-    this._authDispatcher.dispatch({ pendingLogin: true });
-    const auth = await this._userAuthenticator.authenticate(userCredentials);
-    this._onAuthentication(auth);
-    return auth;
-  }
-
   /**
    * this should be overridden for relevant storage technology (e.g. mobile token, web cookies)
    * default behaviour is to do nothing (i.e. there is no stored auth info)
    */
   public persistentLogin(): void {
     return;
+  }
+
+  public async performLogin(userCredentials: UserCredentials): Promise<UserAuthentication> {
+    this._authDispatcher.dispatch({ pendingLogin: true });
+    const auth = await this._userAuthenticator.authenticate(userCredentials);
+    this._onAuthentication(auth);
+    return auth;
   }
 
   public performLogout(): void {

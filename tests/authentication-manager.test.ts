@@ -1,5 +1,5 @@
 ﻿import { AuthenticationManager } from './../src/flux/authentication-manager';
-import { InMemoryUserAuthenticator } from './../src/authenticate/memory-user-authenticator';
+import { InMemoryUserAuthenticator } from '../src/authenticate/in-memory-user-authenticator';
 import { PayloadDispatcher } from 'fourspace-flux-ts';
 import { UserAuthentication, AuthenticationPayload } from '../src/definitions/user-authentication';
 

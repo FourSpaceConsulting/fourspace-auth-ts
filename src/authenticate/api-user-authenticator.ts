@@ -29,6 +29,8 @@ export class ApiUserAuthenticator implements UserAuthenticator {
             const au: AuthenticatedUser = authData.body;
             resolve({
               isAuthorized: true,
+              isPendingLogin: false,
+              isPendingLogout: false,
               userCredentials,
               authenticatedUser: au,
               token: au.userToken,
@@ -39,7 +41,14 @@ export class ApiUserAuthenticator implements UserAuthenticator {
             if (LOGGER.isDebugEnabled()) {
               LOGGER.debug('Error authorizing user', JSON.stringify(error));
             }
-            resolve({ isAuthorized: false, loginFailed: true, userCredentials, loginMessage: error.response.text });
+            resolve({
+              isPendingLogin: false,
+              isPendingLogout: false,
+              isAuthorized: false,
+              loginFailed: true,
+              userCredentials,
+              loginMessage: error.response.text,
+            });
           },
         );
     });

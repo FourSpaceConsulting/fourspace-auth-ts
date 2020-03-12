@@ -1,20 +1,19 @@
 ﻿import * as Request from 'superagent';
 import { LogFactory } from 'fourspace-logger-ts';
 
-import { UserAuthentication } from '../definitions/user-authentication';
-import { RequestAuthenticator } from '../definitions/request-authenticator';
+import { UserAuthentication } from '../user-authentication';
+import { RequestAuthenticator } from '../request-authenticator';
+import { TokenProvider } from '../token-provider';
 
-const LOGGER = LogFactory.getLogger('request-basic-authenticator');
+const LOGGER = LogFactory.getLogger('request-token-authenticator');
 
-/**
- * Basic request authenticator
- * Updates a superagent request with basic auth info from user authentication object
- */
-export class RequestBasicAuthenticator implements RequestAuthenticator<Request.SuperAgentRequest> {
+export class TokenRequestAuthenticator implements RequestAuthenticator<Request.SuperAgentRequest> {
   private _authentication: UserAuthentication;
+  private _tokenProvider: TokenProvider;
 
-  constructor(authentication: UserAuthentication) {
+  constructor(authentication: UserAuthentication, tokenProvider: TokenProvider) {
     this._authentication = authentication;
+    this._tokenProvider = tokenProvider;
   }
 
   public updateAuthentication(authentication: UserAuthentication): void {
@@ -31,8 +30,8 @@ export class RequestBasicAuthenticator implements RequestAuthenticator<Request.S
     if (!this._authentication.isAuthorized) {
       return request;
     }
-    return request.auth(this._authentication.userCredentials.userId, this._authentication.userCredentials.credential, {
-      type: 'basic',
-    });
+    const token = this._tokenProvider.authorizationToken(this._authentication);
+
+    return request.auth(token, { type: 'bearer' });
   }
 }

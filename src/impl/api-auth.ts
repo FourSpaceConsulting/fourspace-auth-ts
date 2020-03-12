@@ -1,8 +1,8 @@
 import * as Request from 'superagent';
 import { LogFactory } from 'fourspace-logger-ts';
-import { UserAuthenticator } from '../definitions/user-authenticator';
-import { UserAuthentication, UserCredentials, AuthenticatedUser } from '../definitions/user-authentication';
-import { AuthenticationUriProvider } from '../definitions/authentication-uri-provider';
+import { UserAuthenticator } from '../user-authenticator';
+import { UserAuthentication, UserCredentials, AuthenticatedUser } from '../user-authentication';
+import { AuthenticationUriProvider } from '../uri-provider';
 
 const LOGGER = LogFactory.getLogger('api-user-authenticator');
 

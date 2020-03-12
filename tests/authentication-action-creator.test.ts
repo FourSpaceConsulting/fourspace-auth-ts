@@ -1,8 +1,8 @@
-﻿import { UserAuthenticator } from './../src/definitions/user-authenticator';
-import { PayloadDispatcher } from 'fourspace-flux-ts';
-import { UserAuthentication, AuthenticationPayload, UserCredentials } from '../src/definitions/user-authentication';
-import { AuthenticationStoreImpl } from '../src/flux/auth-storeimpl';
-import { AuthenticationActionCreatorImpl } from '../src/flux/authactioncreatorimpl';
+﻿import { PayloadDispatcher } from 'fourspace-flux-ts';
+import { UserAuthenticator } from './../src/user-authenticator';
+import { UserAuthentication, AuthenticationPayload, UserCredentials } from '../src/user-authentication';
+import { AuthenticationStoreImpl } from './../src/impl/auth-storeimpl';
+import { AuthenticationActionCreatorImpl } from '../src/impl/actioncreatorimpl';
 
 describe('Test Authentication Action Creator', () => {
 

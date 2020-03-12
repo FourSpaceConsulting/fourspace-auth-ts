@@ -1,10 +1,10 @@
 ﻿import { Dispatcher } from 'fourspace-flux-ts';
-import { AuthenticationPayload } from '../definitions/user-authentication';
-import { UserAuthenticator } from '../definitions/user-authenticator';
-import { AuthenticationActionCreator } from '../definitions/authentication-action-creator';
-import { AuthenticationActionCreatorImpl } from './authactioncreatorimpl';
+import { AuthenticationPayload } from '../user-authentication';
+import { UserAuthenticator } from '../user-authenticator';
+import { AuthenticationActionCreator } from '../auth-actioncreator';
+import { AuthenticationActionCreatorImpl } from './actioncreatorimpl';
 import { AuthenticationStoreImpl } from './auth-storeimpl';
-import { AuthenticationStore } from '../definitions/authentication-store';
+import { AuthenticationStore } from '../auth-store';
 
 export class AuthenticationManager {
   private _userAuthenticator: UserAuthenticator;

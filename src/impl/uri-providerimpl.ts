@@ -1,4 +1,4 @@
-import { AuthenticationUriProvider } from '../definitions/authentication-uri-provider';
+import { AuthenticationUriProvider } from '../uri-provider';
 
 export class AuthenticationUriProviderImpl implements AuthenticationUriProvider {
   private readonly hostUri: string;

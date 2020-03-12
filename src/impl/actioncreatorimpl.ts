@@ -1,7 +1,7 @@
 ﻿import { Dispatcher } from 'fourspace-flux-ts';
-import { UserAuthentication, UserCredentials, AuthenticationPayload } from '../definitions/user-authentication';
-import { UserAuthenticator } from '../definitions/user-authenticator';
-import { AuthenticationActionCreator } from '../definitions/authentication-action-creator';
+import { UserAuthentication, UserCredentials, AuthenticationPayload } from '../user-authentication';
+import { UserAuthenticator } from '../user-authenticator';
+import { AuthenticationActionCreator } from '../auth-actioncreator';
 
 export class AuthenticationActionCreatorImpl implements AuthenticationActionCreator {
   private _authDispatcher: Dispatcher<AuthenticationPayload>;

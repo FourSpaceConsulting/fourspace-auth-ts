@@ -1,9 +1,6 @@
 ﻿import { Dispatcher, EmitAllEventEmitter, DispatcherUpdateStore, Store } from 'fourspace-flux-ts';
-import { UserAuthentication, AuthenticationPayload } from '../definitions/user-authentication';
-import { Logger, LogFactory } from 'fourspace-logger-ts';
-import { AuthenticationStore } from '../definitions/authentication-store';
-
-const LOGGER: Logger = LogFactory.getLogger('authorization-store');
+import { UserAuthentication, AuthenticationPayload } from '../user-authentication';
+import { AuthenticationStore } from '../auth-store';
 
 export class AuthenticationStoreImpl
   extends DispatcherUpdateStore<AuthenticationPayload, UserAuthentication, UserAuthentication>

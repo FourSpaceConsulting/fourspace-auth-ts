@@ -1,7 +1,7 @@
-﻿import { AuthenticationManager } from '../src/flux/auth-manager';
-import { InMemoryUserAuthenticator } from '../src/authenticate/memoryuserauthenticator';
+﻿import { AuthenticationManager } from '../src/impl/auth-manager';
+import { InMemoryUserAuthenticator } from '../src/impl/memory-auth';
 import { PayloadDispatcher } from 'fourspace-flux-ts';
-import { UserAuthentication, AuthenticationPayload } from '../src/definitions/user-authentication';
+import { UserAuthentication, AuthenticationPayload } from '../src/user-authentication';
 
 describe('Test Authentication Manager', () => {
 

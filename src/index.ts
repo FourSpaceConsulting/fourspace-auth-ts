@@ -1,25 +1,20 @@
-// auth object
-export {
-  AuthenticatedUser,
-  UserCredentials,
-  UserAuthentication,
-  AuthenticationPayload,
-} from './definitions/user-authentication';
+// interface defs
+export * from './user-authentication';
+export * from './auth-store';
+export * from './auth-actioncreator';
+export * from './request-authenticator';
+export * from './token-provider';
+export * from './user-authenticator';
+export * from './uri-provider';
 // requests
-export { RequestAuthenticator } from './definitions/request-authenticator';
-export { RequestBasicAuthenticator } from './request/request-basic-authenticator';
-export { RequestTokenAuthenticator } from './request/request-token-authenticator';
-export { TokenProvider } from './definitions/token-provider';
-export { AuthTokenProvider } from './token/auth-token-provider';
+export * from './impl/basic-request';
+export * from './impl/token-request';
+export * from './impl/auth-token';
 // authenticators
-export { UserAuthenticator } from './definitions/user-authenticator';
-export { InMemoryUserAuthenticator } from './authenticate/memoryuserauthenticator';
-export { ApiUserAuthenticator } from './authenticate/api-user-authenticator';
-export { AuthenticationUriProvider } from './definitions/authentication-uri-provider';
-export { AuthenticationUriProviderImpl } from './authenticate/authuriproviderimpl';
+export * from './impl/memory-auth';
+export * from './impl/api-auth';
+export * from './impl/uri-providerimpl';
 // flux
-export { AuthenticationActionCreator } from './definitions/authentication-action-creator';
-export { AuthenticationActionCreatorImpl } from './flux/authactioncreatorimpl';
-export { AuthenticationStore } from './definitions/authentication-store';
-export { AuthenticationStoreImpl } from './flux/auth-storeimpl';
-export { AuthenticationManager } from './flux/auth-manager';
+export * from './impl/actioncreatorimpl';
+export * from './impl/auth-storeimpl';
+export * from './impl/auth-manager';

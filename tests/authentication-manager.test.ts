@@ -9,7 +9,7 @@ describe('Test Authentication Manager', () => {
         // arrange
         const authDispatcher = new PayloadDispatcher<AuthenticationPayload>();
         const authenticator = new InMemoryUserAuthenticator({ 'testUser': 'testPassword' });
-        const authenticationManager = new AuthenticationManager(authDispatcher, authenticator);
+        const authenticationManager = new AuthenticationManager(authDispatcher, authenticator, null);
 
         const updates: UserAuthentication[] = [];
         const storeData: UserAuthentication[] = [];
@@ -23,6 +23,7 @@ describe('Test Authentication Manager', () => {
             });
         });
         // act
+        authenticationManager.actionCreator.pendingLogin();
         authenticationManager.actionCreator.performLogin({ userId: 'testUser', credentialType: null, credential: 'testPassword' });
         // assert
         receivedEvents.then(() => {

@@ -29,6 +29,7 @@ describe('Test Authentication Action Creator', () => {
             });
         });
         // act
+        actionCreator.pendingLogin();
         actionCreator.performLogin({ userId: null, credentialType: null, credential: null });
         // assert
         receivedEvents.then(() => {

@@ -6,17 +6,23 @@ import { AuthenticationActionCreatorImpl } from './actioncreatorimpl';
 import { AuthenticationStoreImpl } from './auth-storeimpl';
 import { AuthenticationStore } from '../auth-store';
 
+type LogoutFunctor = () => Promise<void>;
+
 export class AuthenticationManager {
   private _userAuthenticator: UserAuthenticator;
   private _dispatcher: Dispatcher<AuthenticationPayload>;
   private _actionCreator: AuthenticationActionCreator;
   private _store: AuthenticationStore;
 
-  constructor(dispatcher: Dispatcher<AuthenticationPayload>, userAuthenticator: UserAuthenticator) {
+  constructor(
+    dispatcher: Dispatcher<AuthenticationPayload>,
+    userAuthenticator: UserAuthenticator,
+    logoutFunctor: LogoutFunctor,
+  ) {
     this._dispatcher = dispatcher;
     this._userAuthenticator = userAuthenticator;
     this._store = new AuthenticationStoreImpl(dispatcher);
-    this._actionCreator = new AuthenticationActionCreatorImpl(dispatcher, userAuthenticator);
+    this._actionCreator = new AuthenticationActionCreatorImpl(dispatcher, userAuthenticator, logoutFunctor);
   }
 
   public get userAuthenticator(): UserAuthenticator {

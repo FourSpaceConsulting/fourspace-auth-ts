@@ -1,7 +1,5 @@
 // interface defs
 export * from './user-authentication';
-export * from './auth-store';
-export * from './auth-actioncreator';
 export * from './request-authenticator';
 export * from './token-provider';
 export * from './user-authenticator';
@@ -11,10 +9,14 @@ export * from './impl/basic-request';
 export * from './impl/token-request';
 export * from './impl/auth-token';
 // authenticators
-export * from './impl/memory-auth';
-export * from './impl/api-auth';
+export * from './impl/memory-user-authenticator';
+export * from './impl/api-user-authenticator';
 export * from './impl/uri-providerimpl';
 // flux
-export * from './impl/actioncreatorimpl';
-export * from './impl/auth-storeimpl';
-export * from './impl/auth-manager';
+export * from './flux/auth-store';
+export * from './flux/auth-action-creator';
+export * from './flux/auth-action-handler';
+export * from './flux/action-creator-impl';
+export * from './flux/auth-store-impl';
+export * from './flux/flux-actions';
+export * from './flux/persistent-login-service';

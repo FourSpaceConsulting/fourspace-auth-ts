@@ -3,6 +3,7 @@
   username: string;
   firstname: string;
   lastname: string;
+  fullName: string;
   emailAddress: string;
   userToken: string;
   userTokenDate: string;
@@ -14,21 +15,23 @@ export interface UserCredentials {
   credentialType: string;
   credential: any;
 }
+export type UserCredentialsProvider = () => UserCredentials;
 
-export interface UserAuthentication {
+export interface ServerCredentials {
+  token: string;
+}
+export interface LogoutInfo {
+  credentialType: string;
+}
+export interface AuthenticationState {
   isAuthorized: boolean;
   authenticatedUser?: AuthenticatedUser;
-  isPendingLogin?: boolean;
-  isPendingLogout?: boolean;
-  loginFailed?: boolean;
-  loginMessage?: string;
   userCredentials?: UserCredentials;
-  token?: string;
-  timestamp?: any;
-}
-
-export interface AuthenticationPayload {
-  invalidate?: boolean;
-  pendingLogin?: boolean;
-  userAuthentication?: UserAuthentication;
+  serverCredentials?: ServerCredentials;
+  actionState: {
+    isPendingLogin?: boolean;
+    isPendingLogout?: boolean;
+    loginFailed?: boolean;
+    loginMessage?: string;
+  };
 }

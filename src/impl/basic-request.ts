@@ -1,7 +1,7 @@
 ﻿import * as Request from 'superagent';
 import { LogFactory } from 'fourspace-logger-ts';
 
-import { UserAuthentication } from '../user-authentication';
+import { AuthenticationState } from '../user-authentication';
 import { RequestAuthenticator } from '../request-authenticator';
 
 const LOGGER = LogFactory.getLogger('request-basic-authenticator');
@@ -11,13 +11,13 @@ const LOGGER = LogFactory.getLogger('request-basic-authenticator');
  * Updates a superagent request with basic auth info from user authentication object
  */
 export class BasicRequestAuthenticator implements RequestAuthenticator<Request.SuperAgentRequest> {
-  private _authentication: UserAuthentication;
+  private _authentication: AuthenticationState;
 
-  constructor(authentication: UserAuthentication) {
+  constructor(authentication: AuthenticationState) {
     this._authentication = authentication;
   }
 
-  public updateAuthentication(authentication: UserAuthentication): void {
+  public updateAuthentication(authentication: AuthenticationState): void {
     if (LOGGER.isDebugEnabled()) {
       LOGGER.debug('Updating authentication');
     }

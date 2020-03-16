@@ -1,8 +1,8 @@
 import { TokenProvider } from '../token-provider';
-import { UserAuthentication } from '../user-authentication';
+import { AuthenticationState } from '../user-authentication';
 
 export class AuthTokenProvider implements TokenProvider {
-  public authorizationToken(authentication: UserAuthentication): string {
-    return authentication.token;
+  public authorizationToken(authentication: AuthenticationState): string {
+    return authentication.serverCredentials?.token;
   }
 }

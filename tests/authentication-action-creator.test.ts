@@ -1,6 +1,6 @@
-﻿import { AuthenticationActionCreatorImpl } from './../src/flux/action-creator-impl';
-import { AuthenticationStoreImpl } from './../src/flux/auth-store-impl';
-import { AuthenticatedUser, AuthenticationState } from './../src/user-authentication';
+﻿import { AuthenticationActionCreatorImpl } from '../src/flux/action-creator-impl';
+import { AuthenticationStoreImpl } from '../src/flux/auth-store-impl';
+import { AuthenticatedUser, AuthenticationState } from '../src/user-authentication';
 
 import { DispatcherImpl } from 'fourspace-flux-ts'
 import { AuthenticationAction } from '../src/flux/flux-actions';

@@ -1,5 +1,5 @@
 ﻿import { AuthTokenProvider } from './../src/impl/auth-token';
-import { UserAuthentication } from './../src/user-authentication';
+import { AuthenticationState } from './../src/user-authentication';
 import { TokenRequestAuthenticator } from './../src/impl/token-request';
 import { BasicRequestAuthenticator } from '../src/impl/basic-request';
 
@@ -9,7 +9,7 @@ describe('Test Request Authenticator', () => {
 
     test('Test basic request header', () => {
         // arrange
-        const auth: UserAuthentication = { isAuthorized: true, userCredentials: { userId: 'testName', credentialType: 'native', credential: 'testPassword' } };
+        const auth: AuthenticationState = { isAuthorized: true, userCredentials: { userId: 'testName', credentialType: 'native', credential: 'testPassword' }, actionState: {} };
         const authorizer: BasicRequestAuthenticator = new BasicRequestAuthenticator(auth);
         const expected = 'Basic dGVzdE5hbWU6dGVzdFBhc3N3b3Jk';
         // act
@@ -22,7 +22,7 @@ describe('Test Request Authenticator', () => {
 
     test('Test token request header', () => {
         // arrange
-        const auth: UserAuthentication = { isAuthorized: true, token: 'testToken' };
+        const auth: AuthenticationState = { isAuthorized: true, serverCredentials: { token: 'testToken' }, actionState: {} };
         const provider: AuthTokenProvider = new AuthTokenProvider();
         const authorizer: TokenRequestAuthenticator = new TokenRequestAuthenticator(auth, provider);
         const expected = 'Bearer testToken';

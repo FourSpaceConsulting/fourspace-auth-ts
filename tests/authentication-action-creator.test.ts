@@ -1,47 +1,56 @@
-﻿import { PayloadDispatcher } from 'fourspace-flux-ts';
-import { UserAuthenticator } from './../src/user-authenticator';
-import { UserAuthentication, AuthenticationPayload, UserCredentials } from '../src/user-authentication';
-import { AuthenticationStoreImpl } from './../src/impl/auth-storeimpl';
-import { AuthenticationActionCreatorImpl } from '../src/impl/actioncreatorimpl';
+﻿import { AuthenticationActionCreatorImpl } from './../src/flux/action-creator-impl';
+import { AuthenticationStoreImpl } from './../src/flux/auth-store-impl';
+import { AuthenticatedUser, AuthenticationState } from './../src/user-authentication';
 
-describe('Test Authentication Action Creator', () => {
+import { DispatcherImpl } from 'fourspace-flux-ts'
+import { AuthenticationAction } from '../src/flux/flux-actions';
+import { InMemoryUserAuthenticator } from '../src/impl/memory-user-authenticator';
 
-    test('Test basic request header', (done) => {
+describe('Test FLux Authentication', () => {
+
+    test('Test success', (done) => {
         // arrange
-        const authDispatcher = new PayloadDispatcher<AuthenticationPayload>();
-        const authenticator = new class TestAuthenticator implements UserAuthenticator {
-            authenticate(userCredentials: UserCredentials): Promise<UserAuthentication> {
-                const userAuth: UserAuthentication = { isAuthorized: false, loginFailed: true, userCredentials };
-                return new Promise<UserAuthentication>((resolve) => { setTimeout(() => { resolve(userAuth) }, 500) });
-            }
-        }();
+        const user: AuthenticatedUser = {
+            id: 1,
+            username: 'testUser',
+            firstname: 'Test',
+            lastname: 'User',
+            fullName: 'Test User',
+            emailAddress: 'test@test.com',
+            userToken: '',
+            userTokenDate: '',
+            secretKey: '',
+        };
+        const authDispatcher = new DispatcherImpl<AuthenticationAction>();
+        const authenticator = new InMemoryUserAuthenticator(new Map([
+            ['testUser', { credential: 'testPassword', user }]
+        ]), 'Invalid credentials');
         const actionCreator = new AuthenticationActionCreatorImpl(authDispatcher, authenticator);
         const store = new AuthenticationStoreImpl(authDispatcher);
-        const updates: UserAuthentication[] = [];
-        const storeData: UserAuthentication[] = [];
+        //
+        const storeData: AuthenticationState[] = [];
         const receivedEvents = new Promise((resolve) => {
-            store.addChangeListener(p => {
-                updates.push(p);
-                storeData.push(store.getStoreData());
-                if (p.loginFailed) {
+            store.subscribe(() => {
+                const state = store.getData();
+                storeData.push(state);
+                if (!state.actionState.isPendingLogin) {
                     resolve();
                 }
             });
         });
         // act
-        actionCreator.pendingLogin();
-        actionCreator.performLogin({ userId: null, credentialType: null, credential: null });
+        actionCreator.performLogin({ userId: 'testUser', credentialType: null, credential: 'testPassword' });
         // assert
         receivedEvents.then(() => {
-            expect(updates.length).toBe(2);
-            expect(updates[0].isPendingLogin).toBeTruthy();
-            expect(updates[1].isPendingLogin).not.toBeTruthy();
-            expect(updates[0]).toEqual(storeData[0]);
-            expect(updates[1]).toEqual(storeData[1]);
+            expect(storeData.length).toBe(2);
+            expect(storeData[0].actionState.isPendingLogin).toBeTruthy();
+            expect(storeData[1].actionState.isPendingLogin).not.toBeTruthy();
+            expect(storeData[1].actionState.loginFailed).not.toBeTruthy();
             done();
         });
 
     });
+
 
 });
 

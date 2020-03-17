@@ -21,7 +21,7 @@ export class FluxPersistentLoginService implements PersistentLoginService {
   public persistentLogin(): void {
     // get credentials
     const authState = this._store.getData();
-    if (authState.isAuthorized && authState.userCredentials != null) {
+    if (authState && authState.isAuthorized && authState.userCredentials != null) {
       this._actionCreator.performLogin(authState.userCredentials);
     }
   }

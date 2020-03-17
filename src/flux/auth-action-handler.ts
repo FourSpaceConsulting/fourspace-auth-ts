@@ -14,8 +14,9 @@ import {
 } from './flux-actions';
 
 type reducer = (state: AuthenticationState, action: AuthenticationAction) => AuthenticationState;
+const baseState: AuthenticationState = { isAuthorized: false, actionState: {} };
 
-export function handleAuthAction(state: AuthenticationState, action: AuthenticationAction): AuthenticationState {
+export function handleAuthAction(state: AuthenticationState = baseState, action: AuthenticationAction): AuthenticationState {
   switch (action.type) {
     case START_LOGIN:
       return startLogin(state, action);

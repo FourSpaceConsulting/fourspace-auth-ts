@@ -11,6 +11,7 @@ export * from './impl/auth-token';
 // authenticators
 export * from './impl/memory-user-authenticator';
 export * from './impl/api-user-authenticator';
+export * from './impl/strategy-user-authenticator';
 export * from './impl/uri-providerimpl';
 // flux
 export * from './flux/auth-store';

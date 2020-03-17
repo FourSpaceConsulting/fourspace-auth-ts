@@ -31,7 +31,7 @@ describe('Test FLux Authentication', () => {
         const storeData: AuthenticationState[] = [];
         const receivedEvents = new Promise((resolve) => {
             store.subscribe(() => {
-                const state = store.getData();
+                const state = store.getState();
                 storeData.push(state);
                 if (!state.actionState.isPendingLogin) {
                     resolve();

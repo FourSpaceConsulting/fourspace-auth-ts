@@ -8,12 +8,15 @@ export class AuthenticationStoreImpl extends AbstractDispatcherStore<Authenticat
   implements AuthenticationStore {
   private _userAuthentication: AuthenticationState;
 
-  constructor(dispatcher: SubscribableDispatcher<AuthenticationAction>) {
+  constructor(
+    dispatcher: SubscribableDispatcher<AuthenticationAction>,
+    baseState: AuthenticationState = { isAuthorized: false, actionState: {} },
+  ) {
     super('AuthStore', dispatcher, new EmitterImpl());
-    this._userAuthentication = { isAuthorized: false, actionState: {} };
+    this._userAuthentication = baseState;
   }
 
-  public getData(): AuthenticationState {
+  public getState(): AuthenticationState {
     return this._userAuthentication;
   }
 

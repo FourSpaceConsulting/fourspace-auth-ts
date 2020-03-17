@@ -13,6 +13,11 @@ export class FluxPersistentLoginService implements PersistentLoginService {
   private _store: FluxStore<AuthenticationState>;
   private _actionCreator: AuthenticationActionCreator;
 
+  constructor(store: FluxStore<AuthenticationState>, actionCreator: AuthenticationActionCreator) {
+    this._store = store;
+    this._actionCreator = actionCreator;
+  }
+
   public persistentLogin(): void {
     // get credentials
     const authState = this._store.getData();

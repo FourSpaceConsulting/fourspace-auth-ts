@@ -5,7 +5,7 @@ import { AuthenticationAction } from './flux-actions';
 import { handleAuthAction } from './auth-action-handler';
 
 export class AuthenticationStoreImpl<U> extends AbstractDispatcherStore<AuthenticationAction<U>, AuthenticationState<U>>
-  implements AuthenticationStore {
+  implements AuthenticationStore<U> {
   private _userAuthentication: AuthenticationState<U>;
 
   constructor(

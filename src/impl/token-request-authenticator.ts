@@ -24,8 +24,8 @@ export class TokenRequestAuthenticator<R extends RequestLike> implements Request
     if (tokenResponse == null) {
       return request;
     }
-    return isPromise(tokenResponse) ?
-      (tokenResponse as Promise<string>).then(r => r == null ? request : request.set('Authorization', r))
+    return isPromise(tokenResponse)
+      ? (tokenResponse as Promise<string>).then(r => (r == null ? request : request.set('Authorization', r)))
       : request.set('Authorization', tokenResponse as string);
   }
 }

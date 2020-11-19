@@ -1,11 +1,11 @@
 import moment from 'moment';
 
 export interface DateProvider {
-    getDateTime(): Date;
+  getDateTime(): Date;
 }
 
 export class DateProviderSystem implements DateProvider {
-    getDateTime(): Date {
-        return moment.utc().toDate();
-    }
+  getDateTime(): Date {
+    return moment.utc().toDate();
+  }
 }

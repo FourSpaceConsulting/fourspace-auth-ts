@@ -1,5 +1,4 @@
-﻿
-/**
+﻿/**
  * Returns the authorization token for the current user
  */
 export interface TokenProvider {

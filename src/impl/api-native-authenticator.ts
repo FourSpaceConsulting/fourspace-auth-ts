@@ -32,7 +32,11 @@ export class ApiNativeAuthenticator<U> implements UserAuthenticator<U> {
     if (this._loginCredentialType === userCredentials.credentialType) {
       // log in to start a user token session, and save the tokens
       const credential = userCredentials.credential as LogInCredentials;
-      const tokens = await this._userService.loginWithUserId(credential.userId, credential.password, credential.remember);
+      const tokens = await this._userService.loginWithUserId(
+        credential.userId,
+        credential.password,
+        credential.remember,
+      );
       this._tokenManager.setTokenFromResponse(tokens);
       accessToken = tokens.accessToken;
     }

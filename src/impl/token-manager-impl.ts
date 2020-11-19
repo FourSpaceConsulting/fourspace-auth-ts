@@ -4,7 +4,6 @@ import { AccessTokenResponse, TokenAndType, TokenExpiryDecoder, TokenManager, To
 import { TokenProvider } from '../token-provider';
 import { StringTokenStorage } from '../util';
 
-
 export class TokenManagerImpl implements TokenManager, TokenProvider {
   // storage for the tokens
   private _accessStorage: StringTokenStorage;
@@ -15,8 +14,14 @@ export class TokenManagerImpl implements TokenManager, TokenProvider {
   private _dateProvider: DateProvider;
   private _authTokenService: AuthTokenService;
 
-
-  constructor(accessStorage: StringTokenStorage, refreshStorage: StringTokenStorage, rememberMeStorage: StringTokenStorage, expiryDecoder: TokenExpiryDecoder, dateProvider: DateProvider, authTokenService: AuthTokenService) {
+  constructor(
+    accessStorage: StringTokenStorage,
+    refreshStorage: StringTokenStorage,
+    rememberMeStorage: StringTokenStorage,
+    expiryDecoder: TokenExpiryDecoder,
+    dateProvider: DateProvider,
+    authTokenService: AuthTokenService,
+  ) {
     this._accessStorage = accessStorage;
     this._refreshStorage = refreshStorage;
     this._rememberMeStorage = rememberMeStorage;
@@ -70,7 +75,7 @@ export class TokenManagerImpl implements TokenManager, TokenProvider {
 
   public hasUnexpiredToken(): boolean {
     const t = this.getUnexpiredToken();
-    return (t?.token != null);
+    return t?.token != null;
   }
 
   public getUnexpiredToken(): TokenAndType {
@@ -135,5 +140,4 @@ export class TokenManagerImpl implements TokenManager, TokenProvider {
     }
     return null;
   }
-
 }

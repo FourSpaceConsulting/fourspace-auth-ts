@@ -1,38 +1,36 @@
-
 /**
  * is object a promise
- * @param p 
+ * @param p
  */
 export function isPromise(p: any) {
-    return (p?.then !== undefined);
+  return p?.then !== undefined;
 }
 
 /**
  * Client storage
  */
 export interface StringTokenStorage {
+  deleteToken(): void;
 
-    deleteToken(): void;
+  setToken(token: string): string;
 
-    setToken(token: string): string;
-
-    getToken(): string;
+  getToken(): string;
 }
 
 /**
  * Memory storage
  */
 export class MemoryStorage implements StringTokenStorage {
-    private token: string;
+  private token: string;
 
-    deleteToken(): void {
-        this.token = undefined;
-    }
-    setToken(token: string): string {
-        this.token = token;
-        return this.token;
-    }
-    getToken(): string {
-        return this.token;
-    }
+  deleteToken(): void {
+    this.token = undefined;
+  }
+  setToken(token: string): string {
+    this.token = token;
+    return this.token;
+  }
+  getToken(): string {
+    return this.token;
+  }
 }

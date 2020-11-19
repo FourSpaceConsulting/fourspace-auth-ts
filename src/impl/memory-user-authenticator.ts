@@ -7,11 +7,7 @@ export class InMemoryUserAuthenticator<U> implements UserAuthenticator<U> {
   private _delay: number;
   private _errorMessage: string;
 
-  constructor(
-    userMap: Map<string, { credential: any; user: U }>,
-    errorMessage: string,
-    delay: number = 0,
-  ) {
+  constructor(userMap: Map<string, { credential: any; user: U }>, errorMessage: string, delay: number = 0) {
     this._userMap = userMap;
     this._errorMessage = errorMessage;
     this._delay = delay;

@@ -11,11 +11,11 @@ import {
   LOGGED_OUT,
 } from './flux-actions';
 
-export class AuthenticationActionCreatorImpl implements AuthenticationActionCreator {
-  private readonly _authDispatcher: Dispatcher<AuthenticationAction>;
-  private readonly _userAuthenticator: UserAuthenticator;
+export class AuthenticationActionCreatorImpl<U> implements AuthenticationActionCreator {
+  private readonly _authDispatcher: Dispatcher<AuthenticationAction<U>>;
+  private readonly _userAuthenticator: UserAuthenticator<U>;
 
-  constructor(authDispatcher: Dispatcher<AuthenticationAction>, userAuthenticator: UserAuthenticator) {
+  constructor(authDispatcher: Dispatcher<AuthenticationAction<U>>, userAuthenticator: UserAuthenticator<U>) {
     this._authDispatcher = authDispatcher;
     this._userAuthenticator = userAuthenticator;
   }
@@ -40,7 +40,7 @@ export class AuthenticationActionCreatorImpl implements AuthenticationActionCrea
         type: LOGIN_FAILURE,
         payload: {
           userCredentials,
-          failureReason: error.loginMessage,
+          failureReason: error.message,
         },
       });
     }
@@ -58,8 +58,10 @@ export class AuthenticationActionCreatorImpl implements AuthenticationActionCrea
     }
   }
 
-  public invalidateAuthorization(): void {
+  public invalidateAuthorization(): Promise<void> {
     // dispatch logout
     this._authDispatcher.dispatch({ type: LOGGED_OUT });
+    //
+    return Promise.resolve();
   }
 }

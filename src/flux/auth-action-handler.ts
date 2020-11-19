@@ -13,13 +13,12 @@ import {
   LoggedOutAction,
 } from './flux-actions';
 
-type reducer = (state: AuthenticationState, action: AuthenticationAction) => AuthenticationState;
-const baseState: AuthenticationState = { isAuthorized: false, actionState: {} };
+const baseState: AuthenticationState<any> = { isAuthorized: false, actionState: {} };
 
-export function handleAuthAction(
-  state: AuthenticationState = baseState,
-  action: AuthenticationAction,
-): AuthenticationState {
+export function handleAuthAction<U>(
+  state: AuthenticationState<U> = baseState,
+  action: AuthenticationAction<U>,
+): AuthenticationState<U> {
   switch (action.type) {
     case START_LOGIN:
       return startLogin(state, action);
@@ -36,7 +35,7 @@ export function handleAuthAction(
   }
 }
 
-function startLogin(state: AuthenticationState, _: StartLoginAction): AuthenticationState {
+function startLogin<U>(state: AuthenticationState<U>, _: StartLoginAction): AuthenticationState<U> {
   return {
     ...state,
     actionState: {
@@ -46,12 +45,10 @@ function startLogin(state: AuthenticationState, _: StartLoginAction): Authentica
   };
 }
 
-function loginSuccess(state: AuthenticationState, action: LoginSuccessAction): AuthenticationState {
+function loginSuccess<U>(state: AuthenticationState<U>, action: LoginSuccessAction<U>): AuthenticationState<U> {
   return {
     ...state,
     isAuthorized: true,
-    serverCredentials: { token: action.payload.authenticatedUser.userToken },
-    userCredentials: action.payload.userCredentials,
     authenticatedUser: action.payload.authenticatedUser,
     actionState: {
       isPendingLogout: false,
@@ -62,12 +59,10 @@ function loginSuccess(state: AuthenticationState, action: LoginSuccessAction): A
   };
 }
 
-function loginFailure(state: AuthenticationState, action: LoginFailedAction): AuthenticationState {
+function loginFailure<U>(state: AuthenticationState<U>, action: LoginFailedAction): AuthenticationState<U> {
   return {
     ...state,
     isAuthorized: false,
-    serverCredentials: null,
-    userCredentials: action.payload.userCredentials,
     authenticatedUser: null,
     actionState: {
       isPendingLogout: false,
@@ -78,7 +73,7 @@ function loginFailure(state: AuthenticationState, action: LoginFailedAction): Au
   };
 }
 
-function startLogout(state: AuthenticationState, _: StartLogoutAction): AuthenticationState {
+function startLogout<U>(state: AuthenticationState<U>, _: StartLogoutAction): AuthenticationState<U> {
   return {
     ...state,
     actionState: {
@@ -88,12 +83,10 @@ function startLogout(state: AuthenticationState, _: StartLogoutAction): Authenti
   };
 }
 
-function loggedOut(state: AuthenticationState, action: LoggedOutAction): AuthenticationState {
+function loggedOut<U>(state: AuthenticationState<U>, action: LoggedOutAction): AuthenticationState<U> {
   return {
     ...state,
     isAuthorized: false,
-    serverCredentials: null,
-    userCredentials: null,
     authenticatedUser: null,
     actionState: {
       isPendingLogout: false,

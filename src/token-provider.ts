@@ -1,8 +1,7 @@
-﻿import { AuthenticationState } from './user-authentication';
-
+﻿
 /**
- * Returns the authorization token from the user authentication object
+ * Returns the authorization token for the current user
  */
 export interface TokenProvider {
-  authorizationToken(authentication: AuthenticationState): string;
+  authorizationToken(): string | Promise<string>;
 }

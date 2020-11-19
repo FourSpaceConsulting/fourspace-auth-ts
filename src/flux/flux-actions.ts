@@ -1,4 +1,4 @@
-import { AuthenticatedUser, UserCredentials } from '../user-authentication';
+import { UserCredentials } from '../user-authentication';
 
 // Start login
 export const START_LOGIN = 'auth/start-login';
@@ -8,13 +8,13 @@ export interface StartLoginAction {
 
 // Login success
 export const LOGIN_SUCCESS = 'auth/login-sucess'; // with credentials, token etc.
-export interface LoginSuccessAction {
+export interface LoginSuccessAction<U> {
   type: 'auth/login-sucess';
-  payload: LoginSuccessPayload;
+  payload: LoginSuccessPayload<U>;
 }
-export interface LoginSuccessPayload {
+export interface LoginSuccessPayload<U> {
   userCredentials: UserCredentials;
-  authenticatedUser: AuthenticatedUser;
+  authenticatedUser: U;
 }
 
 // Login Failed
@@ -40,9 +40,9 @@ export interface LoggedOutAction {
 }
 
 // All Actions
-export type AuthenticationAction =
+export type AuthenticationAction<U> =
   | StartLoginAction
-  | LoginSuccessAction
+  | LoginSuccessAction<U>
   | LoginFailedAction
   | StartLogoutAction
   | LoggedOutAction;

@@ -1,16 +1,14 @@
-﻿import { AuthTokenProvider } from './../src/impl/auth-token';
-import { AuthenticationState } from './../src/user-authentication';
-import { TokenRequestAuthenticator } from './../src/impl/token-request';
+﻿import { TokenRequestAuthenticator } from './../src/impl/token-request-authenticator';
 import { BasicRequestAuthenticator } from '../src/impl/basic-request';
 
 import * as Request from 'superagent';
+import { TokenProvider } from '../src/token-provider';
 
 describe('Test Request Authenticator', () => {
 
     test('Test basic request header', () => {
         // arrange
-        const auth: AuthenticationState = { isAuthorized: true, userCredentials: { userId: 'testName', credentialType: 'native', credential: 'testPassword' }, actionState: {} };
-        const authorizer: BasicRequestAuthenticator = new BasicRequestAuthenticator(auth);
+        const authorizer: BasicRequestAuthenticator<Request.Request> = new BasicRequestAuthenticator<Request.Request>('testName', 'testPassword');
         const expected = 'Basic dGVzdE5hbWU6dGVzdFBhc3N3b3Jk';
         // act
         const req = Request.get('');
@@ -22,10 +20,9 @@ describe('Test Request Authenticator', () => {
 
     test('Test token request header', () => {
         // arrange
-        const auth: AuthenticationState = { isAuthorized: true, serverCredentials: { token: 'testToken' }, actionState: {} };
-        const provider: AuthTokenProvider = new AuthTokenProvider();
-        const authorizer: TokenRequestAuthenticator = new TokenRequestAuthenticator(auth, provider);
-        const expected = 'Bearer testToken';
+        const provider: TokenProvider = { authorizationToken: () => 'testToken' };
+        const authorizer = new TokenRequestAuthenticator(provider);
+        const expected = 'testToken';
         // act
         const req = Request.get('');
         const result = authorizer.authorizeRequest(req);

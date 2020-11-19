@@ -1,19 +1,11 @@
-﻿export interface AuthenticatedUser {
-  id: number;
-  username: string;
-  firstname: string;
-  lastname: string;
-  fullName: string;
-  emailAddress: string;
-  userToken: string;
-  userTokenDate: string;
-  secretKey: string;
-}
-
-export interface UserCredentials {
-  userId: string;
+﻿export interface UserCredentials {
   credentialType: string;
   credential: any;
+}
+export interface LogInCredentials {
+  userId: string;
+  password: string;
+  remember: boolean;
 }
 export type UserCredentialsProvider = () => UserCredentials;
 
@@ -23,11 +15,9 @@ export interface ServerCredentials {
 export interface LogoutInfo {
   credentialType: string;
 }
-export interface AuthenticationState {
+export interface AuthenticationState<U> {
   isAuthorized: boolean;
-  authenticatedUser?: AuthenticatedUser;
-  userCredentials?: UserCredentials;
-  serverCredentials?: ServerCredentials;
+  authenticatedUser?: U;
   actionState: {
     isPendingLogin?: boolean;
     isPendingLogout?: boolean;

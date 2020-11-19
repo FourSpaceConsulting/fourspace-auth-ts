@@ -1,37 +1,30 @@
-﻿import * as Request from 'superagent';
-import { LogFactory } from 'fourspace-logger-ts';
+﻿import { LogFactory } from 'fourspace-logger-ts';
 
-import { AuthenticationState } from '../user-authentication';
 import { RequestAuthenticator } from '../request-authenticator';
 
 const LOGGER = LogFactory.getLogger('request-basic-authenticator');
 
+interface RequestLike {
+  auth(user: string, pwd: string, options: { type: string }): this;
+}
 /**
  * Basic request authenticator
- * Updates a superagent request with basic auth info from user authentication object
+ * Updates a request with basic auth info from user authentication object
  */
-export class BasicRequestAuthenticator implements RequestAuthenticator<Request.SuperAgentRequest> {
-  private _authentication: AuthenticationState;
+export class BasicRequestAuthenticator<R extends RequestLike> implements RequestAuthenticator<R> {
+  private readonly _userId: string;
+  private readonly _password: string;
 
-  constructor(authentication: AuthenticationState) {
-    this._authentication = authentication;
+  constructor(userId: string, password: string) {
+    this._userId = userId;
+    this._password = password;
   }
 
-  public updateAuthentication(authentication: AuthenticationState): void {
-    if (LOGGER.isDebugEnabled()) {
-      LOGGER.debug('Updating authentication');
-    }
-    this._authentication = authentication;
-  }
-
-  public authorizeRequest(request: Request.SuperAgentRequest): Request.SuperAgentRequest {
+  public authorizeRequest(request: R): R {
     if (LOGGER.isDebugEnabled) {
       LOGGER.debug('Authorizing request');
     }
-    if (!this._authentication.isAuthorized) {
-      return request;
-    }
-    return request.auth(this._authentication.userCredentials.userId, this._authentication.userCredentials.credential, {
+    return request.auth(this._userId, this._password, {
       type: 'basic',
     });
   }

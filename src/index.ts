@@ -4,15 +4,21 @@ export * from './request-authenticator';
 export * from './token-provider';
 export * from './user-authenticator';
 export * from './uri-provider';
+export * from './util';
+export * from './date-provider';
+export * from './token';
 // requests
 export * from './impl/basic-request';
-export * from './impl/token-request';
-export * from './impl/auth-token';
+export * from './impl/token-request-authenticator';
 // authenticators
 export * from './impl/memory-user-authenticator';
-export * from './impl/api-user-authenticator';
+export * from './impl/api-native-authenticator';
 export * from './impl/strategy-user-authenticator';
 export * from './impl/uri-providerimpl';
+// token
+export * from './impl/token-expiry-decoder';
+export * from './auth-service';
+export * from './impl/token-manager-impl';
 // flux
 export * from './flux/auth-store';
 export * from './flux/auth-action-creator';

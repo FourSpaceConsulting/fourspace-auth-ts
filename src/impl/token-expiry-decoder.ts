@@ -1,5 +1,8 @@
 import moment from 'moment';
+import { LogFactory } from 'fourspace-logger-ts';
 import { TokenExpiryDecoder } from "../token";
+
+const LOGGER = LogFactory.getLogger('api-user-authenticator');
 
 export class TokenExpiryDecoderStringSeparated implements TokenExpiryDecoder {
     private readonly _separator: string;
@@ -14,7 +17,7 @@ export class TokenExpiryDecoderStringSeparated implements TokenExpiryDecoder {
             const expire = expiry == null ? 0 : Buffer.from(expiry, 'base64').readDoubleBE(0);
             return expiry == null ? null : moment.unix(expire).toDate();
         } catch (e) {
-            console.log('Error decoding token', e);
+            LOGGER.warn('Error decoding token', e);
             return null;
         }
     }

@@ -1,7 +1,6 @@
 import { LogFactory } from 'fourspace-logger-ts';
 import { UserAuthenticator } from '../user-authenticator';
 import { UserCredentials, LogoutInfo, LogInCredentials } from '../user-authentication';
-import { AuthenticationUriProvider } from '../uri-provider';
 import { AuthUserService } from '../auth-service';
 import { TokenManager } from '../token';
 

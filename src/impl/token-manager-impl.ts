@@ -1,8 +1,11 @@
+import { LogFactory } from 'fourspace-logger-ts';
 import { AuthTokenService } from '../auth-service';
 import { DateProvider } from '../date-provider';
 import { AccessTokenResponse, TokenAndType, TokenExpiryDecoder, TokenManager, TokenType } from '../token';
 import { TokenProvider } from '../token-provider';
 import { StringTokenStorage } from '../util';
+
+const LOGGER = LogFactory.getLogger('token-manager');
 
 export class TokenManagerImpl implements TokenManager, TokenProvider {
   // storage for the tokens
@@ -34,7 +37,7 @@ export class TokenManagerImpl implements TokenManager, TokenProvider {
     // set access and refresh if present
     if (r?.accessToken != null && r?.refreshToken != null) {
       this.setToken({ token: r.accessToken, type: TokenType.AccessToken });
-      this.setToken({ token: r.refreshToken, type: TokenType.AccessToken });
+      this.setToken({ token: r.refreshToken, type: TokenType.RefreshToken });
     }
     // set remember me if present
     if (r?.rememberMeToken != null) {
@@ -122,11 +125,15 @@ export class TokenManagerImpl implements TokenManager, TokenProvider {
   }
 
   private async updateAccessToken(t: TokenAndType): Promise<string> {
-    const response: AccessTokenResponse = await this.doRefresh(t);
-    if (response != null) {
-      this._accessStorage.setToken(response.accessToken);
-      this._refreshStorage.setToken(response.refreshToken);
-      return response.accessToken;
+    try {
+      const response: AccessTokenResponse = await this.doRefresh(t);
+      if (response != null) {
+        this._accessStorage.setToken(response.accessToken);
+        this._refreshStorage.setToken(response.refreshToken);
+        return response.accessToken;
+      }
+    } catch (e) {
+      LOGGER.warn('Token refresh failed ', e);
     }
     return null;
   }

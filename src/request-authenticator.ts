@@ -3,5 +3,5 @@
  * @param <R> request object
  */
 export interface RequestAuthenticator<R> {
-  authorizeRequest(request: R): R | Promise<R>;
+  authorizeRequest(request: R): Promise<R>;
 }

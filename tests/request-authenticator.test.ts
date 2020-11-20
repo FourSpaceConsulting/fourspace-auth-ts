@@ -1,34 +1,41 @@
 ﻿import { TokenRequestAuthenticator } from './../src/impl/token-request-authenticator';
 import { BasicRequestAuthenticator } from '../src/impl/basic-request';
-
-import * as Request from 'superagent';
 import { TokenProvider } from '../src/token-provider';
+
+interface TestRequestLike {
+    set(field: string, val: string): this;
+    auth(user: string, pwd: string, options: { type: string }): this;
+}
 
 describe('Test Request Authenticator', () => {
 
-    test('Test basic request header', () => {
+    const RequestMocker = jest.fn<TestRequestLike, []>(() => ({
+        set: jest.fn().mockReturnThis(),
+        auth: jest.fn().mockReturnThis()
+    }));
+
+    test('Test basic request header', async () => {
         // arrange
-        const authorizer: BasicRequestAuthenticator<Request.Request> = new BasicRequestAuthenticator<Request.Request>('testName', 'testPassword');
-        const expected = 'Basic dGVzdE5hbWU6dGVzdFBhc3N3b3Jk';
+        const authorizer: BasicRequestAuthenticator<TestRequestLike> = new BasicRequestAuthenticator<TestRequestLike>('testName', 'testPassword');
         // act
-        const req = Request.get('');
-        const result = authorizer.authorizeRequest(req);
+        const req = new RequestMocker();
+        await authorizer.authorizeRequest(req);
         // assert
-        expect((req as any).header.Authorization).toBe(expected);
-        expect((result as any).header.Authorization).toBe(expected);
+        expect(req.auth).toHaveBeenCalledTimes(1);
+        expect(req.auth).toHaveBeenCalledWith('testName', 'testPassword', { type: 'basic' });
     });
 
-    test('Test token request header', () => {
+    test('Test token request header', async () => {
         // arrange
         const provider: TokenProvider = { authorizationToken: () => 'testToken' };
         const authorizer = new TokenRequestAuthenticator(provider);
         const expected = 'testToken';
         // act
-        const req = Request.get('');
-        const result = authorizer.authorizeRequest(req);
+        const req = new RequestMocker();
+        await authorizer.authorizeRequest(req);
         // assert
-        expect((req as any).header.Authorization).toBe(expected);
-        expect((result as any).header.Authorization).toBe(expected);
+        expect(req.set).toHaveBeenCalledTimes(1);
+        expect(req.set).toHaveBeenCalledWith('Authorization', expected);
     });
 
 

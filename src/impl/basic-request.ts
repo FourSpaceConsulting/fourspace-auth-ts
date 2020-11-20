@@ -20,12 +20,12 @@ export class BasicRequestAuthenticator<R extends RequestLike> implements Request
     this._password = password;
   }
 
-  public authorizeRequest(request: R): R {
+  public authorizeRequest(request: R): Promise<R> {
     if (LOGGER.isDebugEnabled) {
       LOGGER.debug('Authorizing request');
     }
-    return request.auth(this._userId, this._password, {
+    return Promise.resolve(request.auth(this._userId, this._password, {
       type: 'basic',
-    });
+    }));
   }
 }
